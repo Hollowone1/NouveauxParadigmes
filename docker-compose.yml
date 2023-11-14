@@ -1,0 +1,21 @@
+version: '3'
+networks:
+  td:
+    driver: bridge
+services:
+
+  # service api.pizza-shop : api pour la prise de commandes
+  #
+  td:
+    image: 'canals/php:latest'
+    env_file: ./.env
+    ports:
+      - '8000'
+      - '1443:443'
+    volumes:
+      - ../td/public:/var/www/html
+    working_dir: /var/www/
+    networks:
+      td:
+        aliases:
+          - td.local
