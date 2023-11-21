@@ -16,7 +16,7 @@ class ConnectionFactory
             \PDO::ATTR_STRINGIFY_FETCHES => false,
         ];
 
-        self::$connection = new \PDO($dsn, $conf['username'], $conf['password'], $options);
+        self::$connection = new \PDO($dsn, $conf[''], $conf[''], $options);
         return self::$connection;
     }
 
