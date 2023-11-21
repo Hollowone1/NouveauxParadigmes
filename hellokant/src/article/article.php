@@ -11,9 +11,12 @@ class Article extends \hellokant\src\model\Model {
 
 $a = new Article(); $a->nom = 'velo'; $a->tarif=273;
 $a->Query::insert();
-print $a->id;
+$a->Query::get();
 
-$liste = Article::all();
 foreach( $liste as $article) {
 print $article->nom;
 }
+
+Query::table('article')
+->where('id','=',5);
+->delete();
