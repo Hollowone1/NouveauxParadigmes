@@ -1,6 +1,7 @@
 <?php
 
-    namespace hellokant\src\Model;
+    namespace iutnc\hellokant\model;
+    use iutnc\hellokant\connection\ConnectionFactory;
 
     class Model {
         protected static $table;
@@ -12,8 +13,10 @@
         }
 
         public function __get(string $name) : mixed {
-        if (array_key_exists($name, $this->_atts))
-        return $this->_atts[$name];
+        if (array_key_exists($name, $this->_atts)) {
+            return $this->_atts[$name];
+        }
+        return $this;
         }
 
         public function __set(string $name, mixed $val) : void {

@@ -4,17 +4,28 @@ require '../vendor/autoload.php';
 
 use \iutnc\hellokant\query\Query;
 use \iutnc\hellokant\connection\ConnectionFactory;
+use iutnc\hellokant\article\Article;
 
 
 // une seule fois au lancement de l'application
 $conf = parse_ini_file('../config/db.conf.ini') ;
 ConnectionFactory::makeConnection($conf);
 
-$q = Query::table('article');
+$a = new Article();
+$a->nom = 'velo';
+$a->tarif=273;
+$a->insert();
+print $a->id ;
+$liste = Article::all();
+foreach( $liste as $article) {
+    print $article->nom;
+}
+
+/*$q = Query::table('article');
 $q->select(['nom']);
 $q->where('id', '=', 64);
 $q->get();
-var_dump($q->get());
+var_dump($q->get());*/
 
 //$insert = Query::table('article')->insert(['nom'=>'grovelo', 'tarif'=>200, 'id_categ'=>1]);
 //var_dump($insert);
