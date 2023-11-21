@@ -26,12 +26,15 @@ class Query {
         //retourne un objet Query, donc on pourra appeler autre méthode après (notamment get())
         $this->where .= ' ' . $col . ' ' . $op . ' ? ';
         $this->args[]=$val;
+
+
         return $this;
     }
 
 
     public function get() : array  {
-        $pdo= new \PDO('dsn', 'user', 'pass');
+        $pdo = new \PDO('mysql:host=td.article.db;dbname=article', 'article', 'article');
+        //$pdo= new \PDO('dsn', 'user', 'pass');
         $this->sql  = 'select '. $this->fields . ' from ' . $this->sqltable;
         if (!is_null($this->where)) {
             $this->sql .= ' where ' . $this->where;
@@ -39,8 +42,9 @@ class Query {
         //prepare puis execute avec arguments
         $stmt = $pdo->prepare($this->sql);
         $stmt->execute($this->args);
-        var_dump($this->sql);
-        var_dump($this->args);
+        //var_dump($this->sql);
+        //var_dump($this->args);
+        //var_dump($stmt->fetchAll(\PDO::FETCH_ASSOC));
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -57,15 +61,14 @@ class Query {
 //            $values[] = '?';
 //            $this->args[] = $attval;
 //        }
-        $pdo = new \PDO('dsn', 'user', 'pass');
+        $pdo = new \PDO('mysql:host=td.article.db;dbname=article', 'article', 'article');
         $stmt = $pdo->prepare($this->sql);
         $stmt->execute($this->args);
 
         return (int)$pdo->lastInsertId($this->sqltable);
 
-        var_dump($this->sql);
-        var_dump($this->args);
-        return 1;
+        //var_dump($this->sql);
+        //var_dump($this->args);
     }
 
     public function select( array $fields) : Query {
@@ -73,15 +76,18 @@ class Query {
         return $this;
     }
 
-    public function delete( array $t) : Query{
+    public function delete() : Query{
 
-        $delete = array_keys($t);
-        $values = array_fill(0, count($t), '?');
-        $this->args = array_values($t);
-        $this->sql = 'delete' . $this->sqltable;
-        $this->sql .= ' (' . implode(',', $delete) . ') '.'values ('. implode(',', $values).')';
-        $pdo = new \PDO('dsn', 'user', 'pass');
+        //$delete = array_keys($t);
+        //$values = array_fill(0, count($t), '?');
+        //$this->args = array_values($t);
+        var_dump($this->where);
+        $this->sql = 'delete from ' . $this->sqltable;
+        $this->sql .= ' where ' . $this->where;
+
+        $pdo = new \PDO('mysql:host=td.article.db;dbname=article', 'article', 'article');
         $stmt = $pdo->prepare($this->sql);
         $stmt->execute($this->args);
+        return $this;
     }
 }
