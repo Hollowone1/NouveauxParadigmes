@@ -49,6 +49,21 @@ class Query {
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function one() : array  {
+        $pdo = ConnectionFactory::getConnection();
+        $this->sql  = 'select '. $this->fields . ' from ' . $this->sqltable;
+        if (!is_null($this->where)) {
+            $this->sql .= ' where ' . $this->where;
+        }
+        $this->sql .= ' limit 1';
+        //prepare puis execute avec arguments
+        $stmt = $pdo->prepare($this->sql);
+        $stmt->execute($this->args);
+        //var_dump($this->sql);
+        //var_dump($this->args);
+        //var_dump($stmt->fetchAll(\PDO::FETCH_ASSOC));
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
     public function insert(array $t) : int {
         $into = array_keys($t);

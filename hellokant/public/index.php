@@ -4,7 +4,7 @@ require '../vendor/autoload.php';
 
 use \iutnc\hellokant\query\Query;
 use \iutnc\hellokant\connection\ConnectionFactory;
-use iutnc\hellokant\article\Article;
+use \iutnc\hellokant\article\Article;
 
 
 // une seule fois au lancement de l'application
@@ -13,13 +13,11 @@ ConnectionFactory::makeConnection($conf);
 
 $a = new Article();
 $a->nom = 'velo';
-$a->tarif=273;
-$a->insert();
-print $a->id ;
-$liste = Article::all();
-foreach( $liste as $article) {
-    print $article->nom;
-}
+$a->tarif= '12';
+$a->id_categ = '1';
+$a->descr = 'beau petit velo';
+
+var_dump($a);
 
 /*$q = Query::table('article');
 $q->select(['nom']);
