@@ -31,7 +31,7 @@
             return $stmt->execute($this->args);
 
             var_dump($this->sql);
-            var_dump(this->args);
+            var_dump($this->args);
             return true;
         }
     }
