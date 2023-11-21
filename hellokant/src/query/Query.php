@@ -73,4 +73,15 @@ class Query {
         return $this;
     }
 
+    public function delete( array $t) : Query{
+
+        $delete = array_keys($t);
+        $values = array_fill(0, count($t), '?');
+        $this->args = array_values($t);
+        $this->sql = 'delete' . $this->sqltable;
+        $this->sql .= ' (' . implode(',', $delete) . ') '.'values ('. implode(',', $values).')';
+        $pdo = new \PDO('dsn', 'user', 'pass');
+        $stmt = $pdo->prepare($this->sql);
+        $stmt->execute($this->args);
+    }
 }
