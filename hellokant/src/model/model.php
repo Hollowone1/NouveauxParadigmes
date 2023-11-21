@@ -19,4 +19,19 @@
         public function __set(string $name, mixed $val) : void {
         $this->atts[$name] = $val;
         }
+
+        public function delete() : bool {
+            $this->sql = 'delete from'. $this->sqltable;
+            if(!is_null($this->where))
+                $this->sql .= ' where '. $this->where;
+
+            $pdo= ConnectionFactory::getConnection();
+
+            $stmt = $pdo->prepare($this->sql);
+            return $stmt->execute($this->args);
+
+            var_dump($this->sql);
+            var_dump(this->args);
+            return true;
+        }
     }
