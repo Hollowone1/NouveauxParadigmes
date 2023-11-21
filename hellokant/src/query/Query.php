@@ -61,7 +61,10 @@ class Query {
 //            $values[] = '?';
 //            $this->args[] = $attval;
 //        }
-        $pdo = new \PDO('mysql:host=td.article.db;dbname=article', 'article', 'article');
+
+        //$pdo = new \PDO('mysql:host=td.article.db;dbname=article', 'article', 'article');
+        //on va chercher connexion (seulement si elle a été créée avant)
+        $pdo = ConnectionFactory::getConnection();
         $stmt = $pdo->prepare($this->sql);
         $stmt->execute($this->args);
 

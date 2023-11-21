@@ -1,7 +1,14 @@
 <?php
 
 require '../vendor/autoload.php';
+
 use \iutnc\hellokant\query\Query;
+use \iutnc\hellokant\connection\ConnectionFactory;
+
+
+// une seule fois au lancement de l'application
+$conf = parse_ini_file('../config/db.conf.ini') ;
+ConnectionFactory::makeConnection($conf);
 
 //$q = Query::table('article');
 //$q->select(['nom']);
