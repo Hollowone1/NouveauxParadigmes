@@ -10,11 +10,11 @@ use \iutnc\hellokant\connection\ConnectionFactory;
 $conf = parse_ini_file('../config/db.conf.ini') ;
 ConnectionFactory::makeConnection($conf);
 
-//$q = Query::table('article');
-//$q->select(['nom']);
-//$q->where('id', '=', 64);
-//$q->get();
-//var_dump($q->get());
+$q = Query::table('article');
+$q->select(['nom']);
+$q->where('id', '=', 64);
+$q->get();
+var_dump($q->get());
 
 //$insert = Query::table('article')->insert(['nom'=>'grovelo', 'tarif'=>200, 'id_categ'=>1]);
 //var_dump($insert);

@@ -1,6 +1,7 @@
 <?php
 
 namespace iutnc\hellokant\query;
+use iutnc\hellokant\connection\ConnectionFactory;
 
 class Query {
     private $sqltable;
@@ -33,7 +34,7 @@ class Query {
 
 
     public function get() : array  {
-        $pdo = new \PDO('mysql:host=td.article.db;dbname=article', 'article', 'article');
+        $pdo = ConnectionFactory::getConnection();
         //$pdo= new \PDO('dsn', 'user', 'pass');
         $this->sql  = 'select '. $this->fields . ' from ' . $this->sqltable;
         if (!is_null($this->where)) {
@@ -79,18 +80,20 @@ class Query {
         return $this;
     }
 
-    public function delete() : Query{
+    public function delete() : bool{
 
         //$delete = array_keys($t);
         //$values = array_fill(0, count($t), '?');
         //$this->args = array_values($t);
-        var_dump($this->where);
+        //var_dump($this->where);
         $this->sql = 'delete from ' . $this->sqltable;
-        $this->sql .= ' where ' . $this->where;
+        if (!is_null($this->where)) {
+            $this->sql .= ' where ' . $this->where;
+        }
 
-        $pdo = new \PDO('mysql:host=td.article.db;dbname=article', 'article', 'article');
+        $pdo = ConnectionFactory::getConnection();
         $stmt = $pdo->prepare($this->sql);
         $stmt->execute($this->args);
-        return $this;
+        return true;
     }
 }
