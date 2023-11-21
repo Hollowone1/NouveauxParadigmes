@@ -1,5 +1,6 @@
 <?php
 
+    namespace hellokant\src\Model;
 
     class Model {
         protected static $table;
