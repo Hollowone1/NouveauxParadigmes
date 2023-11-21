@@ -16,3 +16,7 @@ $a->Query::get();
 foreach( $liste as $article) {
 print $article->nom;
 }
+
+Query::table('article')
+->where('id','=',5);
+->delete();
