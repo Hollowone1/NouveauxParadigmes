@@ -11,7 +11,8 @@ class Article extends \hellokant\src\model\Model {
 
 $a = new Article(); $a->nom = 'velo'; $a->tarif=273;
 $a->Query::insert();
-print $a->id ;
+print $a->id;
+
 $liste = Article::all();
 foreach( $liste as $article) {
 print $article->nom;
