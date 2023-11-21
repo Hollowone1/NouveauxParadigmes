@@ -1,6 +1,6 @@
 <?php
 
-namespace iutnc\hellokant\query;
+namespace iutnc\hellokant\connection;
 
 class ConnectionFactory
 {
@@ -20,18 +20,20 @@ class ConnectionFactory
         try{
             self::$db = new PDO($dsn,$user,$pass,array(
             PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => 
+            PDO::ATTR_ERRMODE =>
             PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_EMULATE_PREPARES => false,
             PDO::ATTR_STRINGIFY_FETCHES => false,
-            ))
+            ));
+
 
             self::$db->prepare(query:'SET NAMES \'UTF8\'')->execute();
         }
             
-        catch(\PDOException $e){
-            throw new DBException(message: "Connection: $dsn", $e->getMessage(). '</br>');
+        catch (\PDOException $e) {
+            throw new DBException("Connection: $dsn " . $e->getMessage() . '</br>');
         }
+        
         
     }
 
