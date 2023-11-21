@@ -30,9 +30,10 @@ class ConnectionFactory
             self::$db->prepare(query:'SET NAMES \'UTF8\'')->execute();
         }
             
-        catch(\PDOException $e){
-            throw new DBException(message: "Connection: $dsn", $e->getMessage(). '</br>');
+        catch (\PDOException $e) {
+            throw new DBException("Connection: $dsn " . $e->getMessage() . '</br>');
         }
+        
         
     }
 
