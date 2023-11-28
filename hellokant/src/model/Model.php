@@ -49,5 +49,4 @@ abstract class Model {
             static::$query = Query::table(static::$table);
             $row = static::$query->where(static::$idColumn, '=', $id)->one();
             return new static($row);
-        }
-    }
+        } }
