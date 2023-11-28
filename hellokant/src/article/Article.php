@@ -17,6 +17,16 @@ class Article extends Model {
             $return[] = new static($m);    
         }    
         return $return; }
+
+        public static function find(int $id): Model {   
+            $row=Query::table(static::$table)
+            ->where(static::$idColumn, '=', $id)->get();    
+            return new static($row); }
+
+        public static function first(int $id): Model {   
+             $row=Query::table(static::$table)
+             ->where(static::$idColumn, '=', $id)->one();    
+             return new static($row); }
     
 }
 
