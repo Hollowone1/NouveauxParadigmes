@@ -4,18 +4,20 @@ namespace iutnc\hellokant\article;
 
 use iutnc\hellokant\model\Model;
 use iutnc\hellokant\query\Query;
-use iutnc\hellokant\connection\ConnectionFactory;
+
 
 class Article extends Model {
     protected static $table='article';
     protected static $idColumn='id';
     
-    public function all() {
-        $pdo = ConnectionFactory::getConnection();
-        $stmt = $pdo->prepare($this->sql);
-        $stmt->execute($this->args);
-        return $stmt->fetchAll();
-    }
+    public static function all() : array {    
+        $all = Query::table(static::$table)->get();    
+        $return=[];    
+        foreach( $all as $m) {        
+            $return[] = new static($m);    
+        }    
+        return $return; }
+    
 }
 
 $a = new Article(); 
