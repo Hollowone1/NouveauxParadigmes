@@ -18,7 +18,18 @@ class Article extends Model {
         }    
         return $return; }
 
-        public static function find(int $id): Model {   
+        public static function find(int $id, $columns = [], $criteria = []): Model { 
+            
+            $whereClause = '';
+            $params = [];
+
+            foreach ($criteria as $criterion) {
+                list($column, $operator, $value) = $criterion;
+                $whereClause .= empty($whereClause) ? "WHERE $column $operator :$column" : " AND $column $operator :$column";
+                $params[":$column"] = $value;
+            }
+
+            $row = empty($columns) ? '*' : implode(', ', $columns);
             $row=Query::table(static::$table)
             ->where(static::$idColumn, '=', $id)->get();    
             return new static($row); }
